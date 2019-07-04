@@ -1,0 +1,5 @@
+FROM alpine:latest
+
+COPY lightd /usr/local/bin/lightd
+
+ENTRYPOINT ["/usr/local/bin/lightd"]

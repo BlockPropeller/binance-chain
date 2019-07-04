@@ -1,0 +1,17 @@
+FROM alpine:3.10
+
+RUN apk --no-cache add ca-certificates wget && \
+      wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+      wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-2.29-r0.apk && \
+      apk --no-cache add glibc-2.29-r0.apk && \
+      rm -rf /var/cache/apk/*
+
+RUN mkdir /root/.bnbchaind
+
+COPY bnbchaind /usr/local/bin/bnbchaind
+COPY config /root/.bnbchaind/config
+
+RUN sed -i'' 's/logToConsole = false/logToConsole = true/g' /root/.bnbchaind/config/app.toml
+
+ENTRYPOINT ["/usr/local/bin/bnbchaind"]
+CMD ["start"]

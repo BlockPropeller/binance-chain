@@ -1,0 +1,5 @@
+FROM alpine:latest
+
+COPY bnbcli /usr/local/bin/bnbcli
+
+ENTRYPOINT ["/usr/local/bin/bnbcli"]
